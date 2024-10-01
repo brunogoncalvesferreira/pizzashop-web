@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
 
+import { Header } from '../../components/header'
+
 export function AppLayout() {
   return (
-    <div>
-      <h1>Header</h1>
+    <div className="flex min-h-screen flex-col antialiased">
+      <Header />
 
-      <main>
+      <main className="flex flex-1 flex-col p-4 pt-6">
         <Outlet />
       </main>
     </div>
