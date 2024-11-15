@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import zod from 'zod'
 
@@ -17,12 +17,18 @@ const signInForm = zod.object({
 type SignInForm = zod.infer<typeof signInForm>
 
 export function SignIn() {
+  const [searchParams] = useSearchParams()
   const {
     handleSubmit,
     register,
     formState: { isSubmitted },
-  } = useForm<SignInForm>()
+  } = useForm<SignInForm>({
+    defaultValues: {
+      email: searchParams.get('email') || '',
+    },
+  })
 
+  // useMutation usamos em chamadas http POST - PUT - DELETE
   const { mutateAsync: authenticate } = useMutation({
     mutationFn: signIn,
   })
